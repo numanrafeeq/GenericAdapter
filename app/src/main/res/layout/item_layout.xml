@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+        <!-- Define variables for your data model -->
+        <variable
+            name="model"
+            type="com.nomnom.generic.models.Item" />
+    </data>
+
+    <!-- Your item layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <!-- Example: Displaying a TextView with the model data -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.component1()}"
+            tool:text="ID" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{model.component2()}"
+            tool:text="Name" />
+
+        <!-- Add other views as needed for your data model -->
+
+    </LinearLayout>
+</layout>
