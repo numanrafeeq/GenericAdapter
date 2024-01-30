@@ -9,6 +9,7 @@ import com.nomnom.generic.adapters.kotlin.databinding.GenericDataAdapter
 import com.nomnom.generic.adapters.kotlin.viewbinding.GenericViewAdapter
 import com.nomnom.generic.databinding.ActivityMainBinding
 import com.nomnom.generic.databinding.ItemLayoutBinding
+import com.nomnom.generic.databinding.ItemLayoutViewBinding
 import com.nomnom.generic.models.Item
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         initDataList()
         initClicks()
-        initRecyclerView()
+
 
     }
 
@@ -52,6 +53,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewBindingRecyclerView() {
 
+        val adapter = object : GenericViewAdapter<Item, ItemLayoutViewBinding>(dataList) {
+            override fun onBindData(model: Item, position: Int, bindingAdapter: ItemLayoutViewBinding) {
+
+                bindingAdapter.tvID.text = model.id
+                bindingAdapter.tvName.text = model.name
+            }
+
+            override fun onItemClick(model: Item, position: Int, bindingAdapter: ItemLayoutViewBinding) {
+                Toast.makeText(this@MainActivity, "Item clicked: ${model.id}", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun createBinding(inflater: LayoutInflater, parent: ViewGroup): ItemLayoutViewBinding {
+                return ItemLayoutViewBinding.inflate(inflater, parent, false)
+            }
+        }
+
+        // Set the adapter to the RecyclerView
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.adapter = adapter
 
     }
 
@@ -77,30 +97,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun initRecyclerView() {
 
-        val adapter = object : GenericViewAdapter<Item, ItemLayoutBinding>(dataList) {
-            override fun onBindData(model: Item, position: Int, bindingAdapter: ItemLayoutBinding) {
-
-                // Implement how to bind data to your views in the item layout
-                bindingAdapter.model = model
-            }
-
-            override fun onItemClick(model: Item, position: Int, bindingAdapter: ItemLayoutBinding) {
-                // Implement item click handling
-                Toast.makeText(this@MainActivity, "Item clicked: ${model.id}", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun createBinding(inflater: LayoutInflater, parent: ViewGroup): ItemLayoutBinding {
-
-                return ItemLayoutBinding.inflate(inflater, parent, false)
-            }
-        }
-
-        // Set the adapter to the RecyclerView
-        binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.adapter = adapter
-    }
 
     private fun initDataList() {
 
